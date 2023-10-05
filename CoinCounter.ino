@@ -35,7 +35,7 @@ void loop() {
 	tenInput = analogRead(A5);
 
 	// TODO: Hacer en clase Program
-	if( oneInput < 256 ){
+	if( oneInput < 512 ){
 		if( ! oneIsOnCourse ){
 			counter->appendOneMXN();
 			oneIsOnCourse = true;
@@ -45,7 +45,7 @@ void loop() {
 		oneIsOnCourse = false;
 	}
 
-	if( twoInput < 256 ){
+	if( twoInput < 512 ){
 		if( ! twoIsOnCourse ){
 			counter->appendTwoMXN();
 			twoIsOnCourse = true;
@@ -55,7 +55,7 @@ void loop() {
 		twoIsOnCourse = false;
 	}
 
-	if( fiveInput < 256 ){
+	if( fiveInput < 512 ){
 		if( ! fiveIsOnCourse ){
 			counter->appendFiveMXN();
 			fiveIsOnCourse = true;
@@ -65,7 +65,7 @@ void loop() {
 		fiveIsOnCourse = false;
 	}
 
-	if( tenInput < 256 ){
+	if( tenInput < 512 ){
 		if( ! tenIsOnCourse ){
 			counter->appendTenMXN();
 			tenIsOnCourse = true;
@@ -75,7 +75,17 @@ void loop() {
 		tenIsOnCourse = false;
 	}
 
-	Serial.print("Total: "); Serial.print(counter->getTotal());
-	Serial.print(" Monedas: "); Serial.println(counter->getCoinCounter());
+	i++;
+
+	if( i == 1600 ){
+		Serial.print("Total: "); Serial.print(counter->getTotal());
+		Serial.print(" - Monedas: "); Serial.print(counter->getCoinCounter());
+		Serial.print(" - Monedas de 1: "); Serial.print(counter->getOneMXNCounter());
+		Serial.print(" - Monedas de 2: "); Serial.print(counter->getTwoMXNCounter()/2);
+		Serial.print(" - Monedas de 5: "); Serial.print(counter->getFiveMXNCounter()/5);
+		Serial.print(" - Monedas de 10: "); Serial.println(counter->getTenMXNCounter()/10);
+		i = 0;
+	}
+
 	EasyBuzzer.update();
 }
